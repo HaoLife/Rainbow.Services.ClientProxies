@@ -1,0 +1,9 @@
+{
+  "services": {
+    "samples": "http://localhost:5003",
+    "test": {
+      "url": "http://localhost:5003",
+      "auth": "default"
+    }
+  }
+}

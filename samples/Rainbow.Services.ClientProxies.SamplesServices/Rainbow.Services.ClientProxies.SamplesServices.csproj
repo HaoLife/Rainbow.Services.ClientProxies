@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Rainbow.Services.ClientProxies.Abstractions\Rainbow.Services.ClientProxies.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\Rainbow.Services.ClientProxies.Http\Rainbow.Services.ClientProxies.Http.csproj" />
+    <ProjectReference Include="..\..\src\Rainbow.Services.ClientProxies\Rainbow.Services.ClientProxies.csproj" />
+  </ItemGroup>
+
+
+</Project>
