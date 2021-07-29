@@ -26,7 +26,7 @@ namespace Rainbow.Services.ClientProxies
 
         public T Create<T>()
         {
-            if (!this.proxyDescriptorFinder.TryFind(typeof(T), out IProxyDescription descriptor))
+            if (!this.proxyDescriptorFinder.TryFind(typeof(T), out IProxyDescriptor descriptor))
             {
                 throw new NotFoundException($"not found type {typeof(T).FullName} ");
             }
@@ -36,14 +36,31 @@ namespace Rainbow.Services.ClientProxies
                 throw new NotFoundException($"not found service {descriptor.ServiceName}");
             }
 
-            var provider = this.ProxyProviders.FirstOrDefault(a => a.CanHandle(endpoint.Protocol));
+            var provider = this.ProxyProviders.FirstOrDefault(a => a.CanHandle(descriptor.ProviderType));
 
             if (provider == null)
             {
-                throw new NotFoundException($"not found provider {typeof(T).FullName}, not support {endpoint.Protocol}");
+                throw new NotFoundException($"not found provider {typeof(T).FullName}, not support {descriptor.ProviderType}");
             }
 
             return provider.Create<T>(descriptor, endpoint);
+        }
+
+        public T Create<T>(string endpoint)
+        {
+            if (!this.proxyDescriptorFinder.TryFind(typeof(T), out IProxyDescriptor descriptor))
+            {
+                throw new NotFoundException($"not found type {typeof(T).FullName} ");
+            }
+
+            var provider = this.ProxyProviders.FirstOrDefault(a => a.CanHandle(descriptor.ProviderType));
+
+            if (provider == null)
+            {
+                throw new NotFoundException($"not found provider {typeof(T).FullName}, not support {descriptor.ProviderType}");
+            }
+           
+            return provider.Create<T>(descriptor, new ServiceEndpoint("", endpoint));
         }
     }
 }

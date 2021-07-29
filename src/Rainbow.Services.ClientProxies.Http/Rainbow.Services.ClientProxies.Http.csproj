@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Rainbow.Services.ClientProxies.Abstractions\Rainbow.Services.ClientProxies.Abstractions.csproj" />
+    <ProjectReference Include="..\Rainbow.Services.ClientProxies\Rainbow.Services.ClientProxies.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -7,5 +7,6 @@ namespace Rainbow.Services.ClientProxies.Abstractions
     public interface IServiceProxyFactory
     {
         T Create<T>();
+        T Create<T>(string endpoint);
     }
 }

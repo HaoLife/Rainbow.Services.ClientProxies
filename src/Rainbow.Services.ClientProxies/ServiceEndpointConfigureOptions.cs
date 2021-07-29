@@ -22,20 +22,9 @@ namespace Rainbow.Services.ClientProxies
 
             foreach (var item in childs)
             {
-                IServiceEndpoint endpoint;
-                if (item.Value == null)
-                {
-                    var url = item.GetSection("url").Value;
-                    var auth = item.GetSection("auth")?.Value;
-                    endpoint = new ServiceEndpoint(item.Key, url, auth);
-                }
-                else
-                {
-                    endpoint = new ServiceEndpoint(item.Key, item.Value);
-                }
-
+                IServiceEndpoint endpoint
+                     = new ServiceEndpoint(item.Key, item.Value);
                 options.Endpoints.Add(endpoint.Name, endpoint);
-
             }
 
         }

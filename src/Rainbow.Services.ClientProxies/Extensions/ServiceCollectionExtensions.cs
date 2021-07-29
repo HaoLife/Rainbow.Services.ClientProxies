@@ -13,7 +13,7 @@ namespace Microsoft.Extensions.DependencyInjection
     public static class ServiceCollectionExtensions
     {
 
-        public static IServiceCollection AddClientProxies(this IServiceCollection services, IConfiguration configuration, Action<IServiceProxyBuilder> configure = null)
+        public static IServiceCollection AddClientProxies(this IServiceCollection services, Action<IServiceProxyBuilder> configure = null)
         {
             if (services == null)
             {
@@ -21,19 +21,16 @@ namespace Microsoft.Extensions.DependencyInjection
             }
 
             services.AddOptions();
-
             services.TryAddSingleton<IServiceEndpointProvider, ServiceEndpointProvider>();
             services.TryAddSingleton<IProxyDescriptorFinder, ProxyDescriptorFinder>();
             services.TryAddSingleton<IServiceProxyFactory, ServiceProxyFactory>();
-
-            services.TryAddEnumerable(ServiceDescriptor.Singleton<IConfigureOptions<ServiceEndpointOptions>>(
-                new ServiceEndpointConfigureOptions(configuration)));
 
             var builder = new ServiceProxyBuilder(services);
             configure?.Invoke(builder);
 
             return services;
         }
+
 
     }
 }

@@ -2,14 +2,17 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.AspNetCore.Routing.Patterns;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Rainbow.Services.ClientProxies.SamplesServices.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Rainbow.Services.ClientProxies.SamplesServices
@@ -28,10 +31,16 @@ namespace Rainbow.Services.ClientProxies.SamplesServices
         {
             services.AddControllers();
 
-            services.AddClientProxies(Configuration.GetSection("services"), builder =>
-             {
-                 builder.AddHttpProxy(a => { });
-             });
+            services.AddClientProxies(builder =>
+            {
+                builder
+                    .AddServiceConfigure(Configuration.GetSection("services"))
+                    .AddHttp()
+                    .AddAutoProxy()
+                    .AddHttpProxy<IWeatherForecastService>("samples");
+            });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,7 +61,7 @@ namespace Rainbow.Services.ClientProxies.SamplesServices
             {
                 endpoints.MapControllers();
             });
-            var a = RoutePatternFactory.Parse("{controller=Home}/{action=Index}/{id?}");
+
         }
     }
 }

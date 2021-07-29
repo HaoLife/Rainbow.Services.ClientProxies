@@ -10,46 +10,36 @@ namespace Rainbow.Services.ClientProxies
 {
     public class ProxyDescriptorFinder : IProxyDescriptorFinder
     {
-        private SortedDictionary<Type, IProxyDescription> _cache = new SortedDictionary<Type, IProxyDescription>();
+        private SortedDictionary<Type, IProxyDescriptor> _cache = new SortedDictionary<Type, IProxyDescriptor>();
 
-
-        public ProxyDescriptorFinder()
+        public ProxyDescriptorFinder(IEnumerable<IProxyDescriptor> proxyDescriptors)
         {
-            this.Load();
+            this.Initialize(proxyDescriptors);
         }
 
-        private void Load()
+        private void Initialize(IEnumerable<IProxyDescriptor> proxyDescriptors)
         {
-            var dependencyContext = DependencyContext.Load(Assembly.GetEntryAssembly());
-            IEnumerable<Assembly> assemblys = dependencyContext.RuntimeLibraries
-                .SelectMany(p => p.GetDefaultAssemblyNames(dependencyContext))
-                .Select(Assembly.Load);
 
-            var proxyTypes = assemblys.SelectMany(a => a.GetTypes())
-                .Where(a => a.GetCustomAttributes<RemoteProxyAttribute>().Any())
-                .ToList();
-
-            var list = new List<IProxyDescription>();
-            foreach (var item in proxyTypes)
+            foreach (var item in proxyDescriptors)
             {
-                var attr = item.GetCustomAttributes<RemoteProxyAttribute>()
-                    .FirstOrDefault();
-                var desc = new ProxyDescription()
+                if (_cache.ContainsKey(item.ProxyType))
                 {
-                    ProxyType = item,
-                    ServiceName = attr.Service,
-                };
-                _cache.Add(desc.ProxyType, desc);
+                    _cache[item.ProxyType] = item;
+                    continue;
+                }
+
+                _cache.Add(item.ProxyType, item);
             }
 
+
         }
 
-        public IProxyDescription Find(Type proxy)
+        public IProxyDescriptor Find(Type proxy)
         {
-            return _cache.TryGetValue(proxy, out IProxyDescription descriptor) ? descriptor : null;
+            return _cache.TryGetValue(proxy, out IProxyDescriptor descriptor) ? descriptor : null;
         }
 
-        public bool TryFind(Type proxy, out IProxyDescription descriptor)
+        public bool TryFind(Type proxy, out IProxyDescriptor descriptor)
         {
             return _cache.TryGetValue(proxy, out descriptor);
         }

@@ -44,7 +44,6 @@ namespace Rainbow.Services.ClientProxies.SamplesServices.Controllers
             .ToArray();
         }
 
-
         [HttpGet("{id}")]
         public WeatherForecast Get(int id, string test)
         {
@@ -61,7 +60,7 @@ namespace Rainbow.Services.ClientProxies.SamplesServices.Controllers
         [HttpGet("proxy/{id}")]
         public async Task<WeatherForecast> GetProxy(int id)
         {
-            //return await serviceProxyFactory.Create<IWeatherForecastService>().GetAsync(id, "test");
+            return await serviceProxyFactory.Create<IWeatherForecastService>().GetAsync(id, "test");
 
 
             //var httpClient = new HttpClient();
@@ -80,6 +79,8 @@ namespace Rainbow.Services.ClientProxies.SamplesServices.Controllers
 
             //requestMessage.Content = new System.Net.Http.StringContent();
 
+
+            //serviceProxyFactory.Create<IWeatherForecastService>("http://test.com").Get();
             return null;
         }
     }

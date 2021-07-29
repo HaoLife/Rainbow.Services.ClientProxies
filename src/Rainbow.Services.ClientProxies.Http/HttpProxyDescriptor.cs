@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Rainbow.Services.ClientProxies.Http
 {
-    public static class ApiActionDescriptionExtension
+    public class HttpProxyDescriptor : ProxyDescriptor
     {
+        public bool IsRestful { get; set; }
 
-        //public 
     }
 }

@@ -15,10 +15,10 @@ namespace Rainbow.Services.ClientProxies.Http
         private static List<string> _methods = new List<string> { "GET", "POST", "DELETE", "PUT" };
 
         private HttpServiceProxyProvider _provider;
-        private IProxyDescription _description;
+        private IProxyDescriptor _description;
         private IServiceEndpoint _serviceEndpoint;
 
-        internal static TService CreateProxy<TService>(HttpServiceProxyProvider provider, IProxyDescription descriptor, IServiceEndpoint endpoint)
+        internal static TService CreateProxy<TService>(HttpServiceProxyProvider provider, IProxyDescriptor descriptor, IServiceEndpoint endpoint)
         {
             TService proxy = DispatchProxy.Create<TService, HttpDispatchServiceProxy>();
             if (proxy == null)

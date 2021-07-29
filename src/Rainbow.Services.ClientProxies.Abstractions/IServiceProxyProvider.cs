@@ -8,6 +8,6 @@ namespace Rainbow.Services.ClientProxies.Abstractions
     {
         bool CanHandle(string providerName);
 
-        T Create<T>(IProxyDescription descriptor, IServiceEndpoint endpoint);
+        T Create<T>(IProxyDescriptor descriptor, IServiceEndpoint endpoint);
     }
 }

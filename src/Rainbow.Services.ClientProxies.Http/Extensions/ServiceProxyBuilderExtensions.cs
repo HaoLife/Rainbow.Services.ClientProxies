@@ -10,14 +10,14 @@ namespace Microsoft.Extensions.Configuration
 {
     public static class ServiceProxyBuilderExtensions
     {
-        public static IServiceProxyBuilder AddHttpProxy(this IServiceProxyBuilder builder)
+        public static IServiceProxyBuilder AddHttp(this IServiceProxyBuilder builder)
         {
-            return builder.AddHttpProxy((c) => { });
+            return builder.AddHttp((c) => { });
         }
 
-        public static IServiceProxyBuilder AddHttpProxy(this IServiceProxyBuilder builder, Action<HttpServiceProxyOptions> configure)
+        public static IServiceProxyBuilder AddHttp(this IServiceProxyBuilder builder, Action<HttpServiceProxyOptions> configure)
         {
-            builder.Services.TryAddSingleton<IApiActionDescriptorFinder, ApiActionDescriptorFinder>();
+            builder.Services.TryAddSingleton<IProxyActionDescriptorFinder, ProxyActionDescriptorFinder>();
             builder.Services.TryAddEnumerable(ServiceDescriptor.Singleton<IServiceProxyProvider, HttpServiceProxyProvider>());
 
             builder.Services.Configure(configure);

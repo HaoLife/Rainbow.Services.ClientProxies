@@ -6,8 +6,8 @@ using System.Text;
 
 namespace Rainbow.Services.ClientProxies.Http
 {
-    public interface IApiActionDescriptorFinder
+    public interface IProxyActionDescriptorFinder
     {
-        ApiActionDescription Find(IProxyDescription description, MethodInfo methodInfo);
+        ProxyActionDescriptor Find(IProxyDescriptor description, MethodInfo methodInfo);
     }
 }

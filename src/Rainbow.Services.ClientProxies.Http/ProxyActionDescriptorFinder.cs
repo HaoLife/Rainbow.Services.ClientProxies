@@ -10,19 +10,19 @@ using Rainbow.Services.ClientProxies.Http.Attributes;
 
 namespace Rainbow.Services.ClientProxies.Http
 {
-    public class ApiActionDescriptorFinder : IApiActionDescriptorFinder
+    public class ProxyActionDescriptorFinder : IProxyActionDescriptorFinder
     {
-        public ApiActionDescriptorFinder(IOptions<HttpServiceProxyOptions> options)
+        public ProxyActionDescriptorFinder(IOptions<HttpServiceProxyOptions> options)
         {
             this.options = options;
         }
 
-        private SortedDictionary<MethodInfo, ApiActionDescription> _cache = new SortedDictionary<MethodInfo, ApiActionDescription>();
+        private SortedDictionary<MethodInfo, ProxyActionDescriptor> _cache = new SortedDictionary<MethodInfo, ProxyActionDescriptor>();
         private readonly IOptions<HttpServiceProxyOptions> options;
 
-        public ApiActionDescription Find(IProxyDescription description, MethodInfo methodInfo)
+        public ProxyActionDescriptor Find(IProxyDescriptor descriptor, MethodInfo methodInfo)
         {
-            if (!_cache.TryGetValue(methodInfo, out ApiActionDescription result))
+            if (!_cache.TryGetValue(methodInfo, out ProxyActionDescriptor result))
             {
                 var methodAttr = methodInfo.GetCustomAttribute<HttpMethodAttribute>();
                 var routeAttr = methodInfo.GetCustomAttribute<RouteProxyAttribute>();
@@ -35,7 +35,7 @@ namespace Rainbow.Services.ClientProxies.Http
 
                 var restful = !string.IsNullOrEmpty(methodHttpMethod) && this.options.Value.Resuful;
 
-                var defaultApiRouteTemplate = ClientProxyDefaults.DefaultApiRouteTemplate;
+                var defaultApiRouteTemplate = ClientProxyDefaults.DefaultRestfulProxyRouteTemplate;
                 var defaultActionRouteTemplate = ClientProxyDefaults.DefaultActionRouteTemplate;
                 var apiRouteTemplate = routeAttr == null ? defaultApiRouteTemplate : routeAttr.Template;
                 var actionRouteTemplate = methodAttr == null ? defaultActionRouteTemplate : methodAttr.Template;
@@ -57,11 +57,11 @@ namespace Rainbow.Services.ClientProxies.Http
                 //parms.Where(a => !a.Text.EndsWith("?"))
                 //    .ToList();
 
-                result = new ApiActionDescription()
+                result = new ProxyActionDescriptor()
                 {
                     MethodInfo = methodInfo,
-                    ProxyType = description.ProxyType,
-                    ServiceName = description.ServiceName,
+                    ProxyType = descriptor.ProxyType,
+                    ServiceName = descriptor.ServiceName,
                     //ProxyDescription = description,
                     HttpMethod = methodHttpMethod,
                     Restful = restful,

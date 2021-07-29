@@ -2,9 +2,10 @@
 
 namespace Rainbow.Services.ClientProxies.Abstractions
 {
-    public interface IProxyDescription
+    public interface IProxyDescriptor
     {
         string ServiceName { get; }
         Type ProxyType { get; }
+        string ProviderType { get; }
     }
 }

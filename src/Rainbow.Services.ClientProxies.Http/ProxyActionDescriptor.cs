@@ -6,12 +6,12 @@ using System.Text;
 
 namespace Rainbow.Services.ClientProxies.Http
 {
-    public class ApiActionDescription
+    public class ProxyActionDescriptor
     {
         //{service}/{proxy}/{method}/{id?}
         public string ServiceName { get; set; }
+        public string ProxyName { get; set; }
         public Type ProxyType { get; set; }
-
         public MethodInfo MethodInfo { get; set; }
 
         public string HttpMethod { get; set; }
