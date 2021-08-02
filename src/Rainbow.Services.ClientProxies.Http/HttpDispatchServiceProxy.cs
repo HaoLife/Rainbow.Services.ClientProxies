@@ -118,7 +118,7 @@ namespace Rainbow.Services.ClientProxies.Http
             if (context.ProxyActionDescriptor.IsTask)
             {
                 //暂不支持Task类型
-                throw new Exception("暂不支持Task类型")；
+                throw new Exception("暂不支持Task类型");
                 //return Task.FromResult(result);
             }
 

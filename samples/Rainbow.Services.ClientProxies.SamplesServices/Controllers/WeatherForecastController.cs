@@ -60,7 +60,7 @@ namespace Rainbow.Services.ClientProxies.SamplesServices.Controllers
         [HttpGet("proxy/{id}")]
         public async Task<WeatherForecast> GetProxyAsync(int id)
         {
-            serviceProxyFactory.Create<IWeatherForecastService>().Get();
+            //serviceProxyFactory.Create<IWeatherForecastService>().Get();
             return serviceProxyFactory.Create<IWeatherForecastService>().Get(id, "test");
 
 
