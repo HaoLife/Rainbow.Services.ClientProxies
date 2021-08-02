@@ -4,10 +4,12 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.AspNetCore.Routing.Patterns;
+using Microsoft.AspNetCore.Routing.Template;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Rainbow.Services.ClientProxies.Http.Text;
 using Rainbow.Services.ClientProxies.SamplesServices.Services;
 using System;
 using System.Collections.Generic;
@@ -36,8 +38,7 @@ namespace Rainbow.Services.ClientProxies.SamplesServices
                 builder
                     .AddServiceConfigure(Configuration.GetSection("services"))
                     .AddHttp()
-                    .AddAutoProxy()
-                    .AddHttpProxy<IWeatherForecastService>("samples");
+                    .AddAutoProxy();
             });
 
 

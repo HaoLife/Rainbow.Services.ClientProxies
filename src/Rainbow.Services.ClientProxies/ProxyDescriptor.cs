@@ -23,6 +23,8 @@ namespace Rainbow.Services.ClientProxies
 
         public string ProviderType { get; set; }
 
+        public List<IProxyDescriptorMetadata> Metadatas { get; set; } = new List<IProxyDescriptorMetadata>();
+
         public static ProxyDescriptor Create<T>(string service, string providerType)
         {
             return new ProxyDescriptor(service, typeof(T), providerType);

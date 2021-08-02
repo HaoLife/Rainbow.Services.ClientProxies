@@ -14,6 +14,7 @@ namespace Rainbow.Services.ClientProxies.Http.Text
 
             var currentText = new StringBuilder();
             var inDynamicValue = false;
+            var optional = false;
 
             for (var i = 0; i < format.Length; i++)
             {
@@ -30,7 +31,7 @@ namespace Rainbow.Services.ClientProxies.Http.Text
 
                         if (currentText.Length > 0)
                         {
-                            tokens.Add(new FormatStringToken(currentText.ToString(), FormatStringTokenType.ConstantText));
+                            tokens.Add(new FormatStringToken(currentText.ToString(), FormatStringTokenType.ConstantText, false));
                             currentText.Clear();
                         }
 
@@ -42,7 +43,6 @@ namespace Rainbow.Services.ClientProxies.Http.Text
                         }
 
                         inDynamicValue = false;
-
                         if (currentText.Length <= 0)
                         {
                             throw new FormatException("Incorrect syntax at char " + i + "! Brackets does not containt any chars.");
@@ -54,9 +54,13 @@ namespace Rainbow.Services.ClientProxies.Http.Text
                             dynamicValue = "{" + dynamicValue + "}";
                         }
 
-                        tokens.Add(new FormatStringToken(dynamicValue, FormatStringTokenType.DynamicValue));
+                        tokens.Add(new FormatStringToken(dynamicValue, FormatStringTokenType.DynamicValue, optional));
                         currentText.Clear();
+                        optional = false;
 
+                        break;
+                    case '?':
+                        optional = true;
                         break;
                     default:
                         currentText.Append(c);
@@ -71,7 +75,7 @@ namespace Rainbow.Services.ClientProxies.Http.Text
 
             if (currentText.Length > 0)
             {
-                tokens.Add(new FormatStringToken(currentText.ToString(), FormatStringTokenType.ConstantText));
+                tokens.Add(new FormatStringToken(currentText.ToString(), FormatStringTokenType.ConstantText, false));
             }
 
             return tokens;

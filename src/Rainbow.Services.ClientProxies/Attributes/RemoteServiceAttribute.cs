@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rainbow.Services.ClientProxies.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -15,5 +16,7 @@ namespace Rainbow.Services.ClientProxies.Attributes
 
         public string ServiceName { get; set; }
         public string ProviderType { get; set; }
+
+        public List<IProxyDescriptorMetadata> Metadatas { get; set; } = new List<IProxyDescriptorMetadata>();
     }
 }

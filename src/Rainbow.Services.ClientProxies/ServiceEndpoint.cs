@@ -20,6 +20,7 @@ namespace Rainbow.Services.ClientProxies
             this.Protocol = uri.Scheme;
             this.Host = uri.Host;
             this.Auth = auth;
+            this.Port = uri.Port;
         }
         public Uri Uri { get; set; }
         public string Name { get; set; }
@@ -29,5 +30,7 @@ namespace Rainbow.Services.ClientProxies
         public string Host { get; set; }
 
         public string Auth { get; set; }
+
+        public int Port { get; set; }
     }
 }

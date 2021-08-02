@@ -30,7 +30,7 @@ namespace Rainbow.Services.ClientProxies
             {
                 var attr = item.GetCustomAttribute<RemoteServiceAttribute>();
 
-                builder.AddProxy(attr.ServiceName, item, attr.ProviderType);
+                builder.AddProxy(attr.ServiceName, item, attr.ProviderType, attr.Metadatas);
             }
 
 

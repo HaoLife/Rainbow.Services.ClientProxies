@@ -10,5 +10,6 @@ namespace Rainbow.Services.ClientProxies.Abstractions
         string Name { get; }
         string Protocol { get; }
         string Host { get; }
+        int Port { get; }
     }
 }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Rainbow.Services.ClientProxies.Http.Text
 {
-    internal enum FormatStringTokenType
+    public enum FormatStringTokenType
     {
         ConstantText,
         DynamicValue

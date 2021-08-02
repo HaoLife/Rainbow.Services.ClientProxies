@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Rainbow.Services.ClientProxies.Abstractions
 {
@@ -7,5 +8,6 @@ namespace Rainbow.Services.ClientProxies.Abstractions
         string ServiceName { get; }
         Type ProxyType { get; }
         string ProviderType { get; }
+        List<IProxyDescriptorMetadata> Metadatas { get; }
     }
 }
